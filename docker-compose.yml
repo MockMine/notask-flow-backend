@@ -159,8 +159,13 @@ services:
       ELASTICSEARCH_CONNECTION_TIMEOUT: ${ELASTICSEARCH_CONNECTION_TIMEOUT:-3s}
       ELASTICSEARCH_SOCKET_TIMEOUT: ${ELASTICSEARCH_SOCKET_TIMEOUT:-3s}
       REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-Administrator}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me-admin-password}
       SA_TOKEN_JWT_SECRET: ${SA_TOKEN_JWT_SECRET:-notask-flow-test-jwt-secret-change-me}
       SA_TOKEN_IS_SHARE: ${SA_TOKEN_IS_SHARE:-false}
+      SECURITY_CSRF_ENABLED: ${SECURITY_CSRF_ENABLED:-false}
+      SECURITY_CORS_ALLOW_CREDENTIALS: ${SECURITY_CORS_ALLOW_CREDENTIALS:-false}
+      SECURITY_ALLOWED_ORIGINS: ${SECURITY_ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
       COLLAB_INTERNAL_TOKEN: ${COLLAB_INTERNAL_TOKEN:-notask-flow-collab-internal-change-me}
       COLLAB_REALTIME_BROADCAST_URL: ${COLLAB_REALTIME_BROADCAST_URL:-http://collab-ws:8081/internal/broadcast}
       NOTASK_MAIL_FROM: ${NOTASK_MAIL_FROM:-no-reply@notask-flow.local}
@@ -217,6 +222,7 @@ services:
       TICKET_VERIFY_PATH: /api/v1/internal/collab/tickets/consume
       SPACE_EVENT_TICKET_VERIFY_PATH: /api/v1/internal/collab/space-events/tickets/consume
       INTERNAL_TOKEN: ${COLLAB_INTERNAL_TOKEN:-notask-flow-collab-internal-change-me}
+      COLLAB_DEBUG_LOGS: ${COLLAB_DEBUG_LOGS:-false}
       TZ: Asia/Hong_Kong
     ports:
       - "${COLLAB_WS_HOST_PORT:-8081}:8081"

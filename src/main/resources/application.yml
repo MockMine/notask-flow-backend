@@ -27,8 +27,8 @@ spring:
   mail:
     host: ${MAIL_HOST:smtp.163.com}
     port: ${MAIL_PORT:465}
-    username: ${MAIL_USERNAME:your-email-username-change-me}
-    password: ${MAIL_PASSWORD:your-email-password-change-me}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
     default-encoding: UTF-8
     properties:
       mail:
@@ -94,10 +94,10 @@ notask-flow:
   invite:
     default-expire-minutes: ${INVITE_DEFAULT_EXPIRE_MINUTES:30}
   collab:
-    internal-token: ${COLLAB_INTERNAL_TOKEN:f+mvb/2nmRxziIq23Z5HaZlRknPZtSQ97pQ8iAez6m1wFn52tIcERSQPKLKYcAqu}
+    internal-token: ${COLLAB_INTERNAL_TOKEN:notask-flow-collab-internal-change-me}
     realtime-broadcast-url: ${COLLAB_REALTIME_BROADCAST_URL:http://localhost:8081/internal/broadcast}
   mail:
-    from: ${NOTASK_MAIL_FROM:welkincode_push@163.com}
+    from: ${NOTASK_MAIL_FROM:no-reply@notask-flow.local}
     app-base-url: ${NOTASK_APP_BASE_URL:http://localhost:3000}
   file:
     cleanup-enabled: ${FILE_CLEANUP_ENABLED:true}

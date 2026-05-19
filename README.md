@@ -164,9 +164,11 @@ docker compose --profile app up -d
 - **Hosts & Ports** — 所有服务的主机地址和端口
 - **Data Directories** — 宿主机数据持久化目录
 - **MySQL / Redis / RabbitMQ / MinIO / Elasticsearch** — 各服务凭据和配置
+- **Admin Console** — 管理端初始账号
 - **Sa-Token / JWT** — 认证密钥
+- **Web Security** — CORS、CSRF 与安全响应头
 - **Collaboration Service** — 协作 WebSocket 配置
-- **Mail** — 邮件服务（默认关闭）
+- **Mail** — 邮件服务账号和邮件链接域名
 - **File Management** — 文件上传限制和清理策略
 
 ### 关键配置项
@@ -174,13 +176,25 @@ docker compose --profile app up -d
 | 配置 | 作用 | 本地开发建议 |
 |------|------|--------------|
 | `SA_TOKEN_JWT_SECRET` | JWT 签名密钥 | 必须改成长随机字符串 |
+| `ADMIN_USERNAME` / `ADMIN_PASSWORD` | 管理端登录账号 | 生产环境必须替换默认值，建议 `ADMIN_PASSWORD` 使用 BCrypt 密文或高强度随机密码 |
 | `COLLAB_INTERNAL_TOKEN` | 后端和 `collab-ws` 内部调用密钥 | 后端与 `collab-ws` 必须完全一致 |
 | `COLLAB_API_BASE_URL` | `collab-ws` 调后端内部接口的地址 | 本地开发用 `http://host.docker.internal:8080` |
 | `COLLAB_REALTIME_BROADCAST_URL` | 后端向 `collab-ws` 广播空间事件的地址 | 本地开发用 `http://localhost:8081/internal/broadcast` |
+| `SECURITY_ALLOWED_ORIGINS` | 允许访问 API 的前端来源 | 按实际 Web 域名、端口和局域网调试地址填写 |
 | `MINIO_ENDPOINT` | 后端访问 MinIO 的地址 | 本地开发用 `http://127.0.0.1:9000` |
 | `ELASTICSEARCH_ENDPOINT` | 后端访问 Elasticsearch 的地址 | 本地开发用 `http://127.0.0.1:9200` |
 | `FILE_MAX_SIZE` | 单次请求最大上传体积 | 需要和前端上传策略、nginx 限制保持一致 |
 | `FILE_MULTIPART_THRESHOLD_SIZE` | 超过该大小建议走分片上传 | 默认 50 MB |
+
+### 配置模板与敏感信息
+
+- `backend/.env.example` 是唯一应提交的后端环境变量模板；真实 `backend/.env`、`backend/.env.*` 已在 `.gitignore` 中忽略。
+- `application.yml` 只保留占位默认值，不应写入真实 JWT 密钥、SMTP 密码、MinIO 密钥或协作内部 token。
+- `application-prod.yml` 对数据库、Redis、RabbitMQ、MinIO、JWT、管理端账号和协作内部 token 使用必填环境变量；缺少这些变量时生产 profile 应直接启动失败。
+- `docker-compose-dev.yml` 偏向本地开发，允许使用示例密码；`docker-compose.yml` 启动全栈前仍应先从 `.env.example` 复制 `.env` 并替换所有 `change-me`、`notask`、`minioadmin` 之类默认值。
+- `COLLAB_INTERNAL_TOKEN` 必须同时提供给 Spring Boot 后端和 `collab-ws`，两侧不一致会导致协作文档 ticket 校验和空间事件广播失败。
+- 邮件是否启用由管理端系统配置表中的 `mail.enabled` 控制，SMTP 连接参数仍由环境变量提供。
+- 协作 ticket 过期时间由管理端系统配置 `collab.ticket-expire-seconds` 控制，不通过 `.env` 热更新。
 
 ## 核心业务模块
 

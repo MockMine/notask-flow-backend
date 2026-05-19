@@ -146,7 +146,7 @@ services:
       API_BASE_URL: ${COLLAB_API_BASE_URL:-http://host.docker.internal:8080}
       TICKET_VERIFY_PATH: /api/v1/internal/collab/tickets/consume
       SPACE_EVENT_TICKET_VERIFY_PATH: /api/v1/internal/collab/space-events/tickets/consume
-      INTERNAL_TOKEN: ${COLLAB_INTERNAL_TOKEN:-f+mvb/2nmRxziIq23Z5HaZlRknPZtSQ97pQ8iAez6m1wFn52tIcERSQPKLKYcAqu}
+      INTERNAL_TOKEN: ${COLLAB_INTERNAL_TOKEN:-notask-flow-collab-internal-change-me}
       COLLAB_DEBUG_LOGS: ${COLLAB_DEBUG_LOGS:-false}
       TZ: Asia/Hong_Kong
     ports:
